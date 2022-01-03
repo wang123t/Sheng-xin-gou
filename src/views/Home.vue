@@ -1,0 +1,42 @@
+<template>
+  <div class="home">
+    <Search />
+    <div class="navlist">
+      <Nav />
+      <Listcontainer />
+      <Recommend/>
+      <Rank/>
+      <Like/>
+      <!-- <Floor/> -->
+      <Brand/>
+    </div>
+  </div>
+</template>
+
+<script>
+import Search from "../components/Search.vue";
+import Listcontainer from "../components/Listcontainer.vue";
+import Recommend from "../components/Recommend.vue";
+import Rank from "../components/Rank.vue";
+import Like from "../components/Like.vue";
+import Floor from "../components/Floor.vue";
+import Brand from "../components/Brand.vue";
+export default {
+  name: "Home",
+  components: {
+    Search,
+    Listcontainer,
+    Recommend,
+    Rank,
+    Like,
+    Floor,
+    Brand
+  },
+  mounted(){
+    this.$store.dispatch('getUserInfo');
+  }
+};
+</script>
+
+<style scoped>
+</style>
