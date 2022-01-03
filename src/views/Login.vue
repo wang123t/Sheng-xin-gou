@@ -77,14 +77,16 @@ export default {
     async login() {
       try {
         const { phone, password } = this;
-        phone &&
-          password &&
-          (await this.$store.dispatch("userLogin", {
+        if (phone && password) {
+          await this.$store.dispatch("userLogin", {
             phone,
             password,
-          }));
-        this.$router.push("/");
-        console.log("登录成功"); //登录成功跳转至home页
+          });
+          this.$router.push("/");//登录成功跳转至home页
+          console.log('登录成功')
+        } else{
+          alert('手机号或密码不能为空')
+        } 
       } catch (error) {
         alert(error.message);
       }

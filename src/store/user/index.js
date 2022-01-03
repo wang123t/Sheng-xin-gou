@@ -42,17 +42,16 @@ const actions = {
             commit("GETCODE", result.data);
             return "ok";
         } else {
-            return Promise.reject(new Error("faile"));
+            return Promise.reject(new Error(result.message));
         }
     },
     //用户注册
     async UserRegister({ commit }, data) {
         let result = await reqUserRegister(data);
-        console.log('注册成功')
         if (result.code == 200) {
             return "ok";
         } else {
-            return Promise.reject(new Error("faile"));
+            return Promise.reject(new Error(result.message));
         }
     },
     //登录业务
@@ -67,13 +66,13 @@ const actions = {
             setToken(result.data.token);
             return "ok";
         } else {
-            return Promise.reject(new Error("faile"));
+            return Promise.reject(new Error("手机号或密码错误"));
         }
     },
     //获取用户信息
     async getUserInfo({ commit }) {
         let result = await reqUserInfo();
-        if (result.code == 200) {
+        if (result.code === 200) {
             //提交用户信息
             commit("GETUSERINFO", result.data);
             return 'ok';
