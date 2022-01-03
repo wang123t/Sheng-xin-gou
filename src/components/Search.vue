@@ -1,7 +1,7 @@
 <template>
   <div class="search">
     <div class="Logo">
-      <router-link to='/'>
+      <router-link to="/">
         <img src="../assets/logo.png" />
         <span>省心购</span>
       </router-link>
@@ -26,11 +26,13 @@ export default {
   props: ["trademark"],
   methods: {
     Search() {
-      //关键字参数params路由跳转
-      this.$router.push({
-        name: "searchGo",
-        params: { keyword: this.keyword },
-      });
+      if (this.keyword) {
+        //关键字参数params路由跳转
+        this.$router.push({
+          name: "searchGo",
+          params: { keyword: this.keyword },
+        });
+      }
     },
   },
   mounted() {
