@@ -25,68 +25,17 @@
     <div class="content">
       <ul>
         <li>
-          <div class="img-item">
+          <div class="img-item" v-for="rank in rankList" :key="rank.id">
             <p class="tab-pic">
               <a href="#">
-                <img src="../assets/images/rank/1.jpg" />
+                <img :src="rank.imgUrl" />
               </a>
             </p>
             <div class="tab-info">
               <div class="info-title">
-                <a href="#"
-                  >【官网价直降1100】Apple iPhone 8 Plus 256GB 银色
-                  移动联通电信4G手机</a
-                >
+                <a>{{ rank.skuDec }}</a>
               </div>
-              <p class="info-price">定金：¥100.00</p>
-            </div>
-          </div>
-          <div class="img-item">
-            <p class="tab-pic">
-              <a href="#">
-                <img src="../assets/images/rank/1.jpg" />
-              </a>
-            </p>
-            <div class="tab-info">
-              <div class="info-title">
-                <a href="#"
-                  >【官网价直降1100】Apple iPhone 8 Plus 256GB 银色
-                  移动联通电信4G手机</a
-                >
-              </div>
-              <p class="info-price">定金：¥100.00</p>
-            </div>
-          </div>
-          <div class="img-item">
-            <p class="tab-pic">
-              <a href="#">
-                <img src="../assets/images/rank/1.jpg" />
-              </a>
-            </p>
-            <div class="tab-info">
-              <div class="info-title">
-                <a href="#"
-                  >【官网价直降1100】Apple iPhone 8 Plus 256GB 银色
-                  移动联通电信4G手机</a
-                >
-              </div>
-              <p class="info-price">定金：¥100.00</p>
-            </div>
-          </div>
-          <div class="img-item">
-            <p class="tab-pic">
-              <a href="#">
-                <img src="../assets/images/rank/1.jpg" />
-              </a>
-            </p>
-            <div class="tab-info">
-              <div class="info-title">
-                <a href="#"
-                  >【官网价直降1100】Apple iPhone 8 Plus 256GB 银色
-                  移动联通电信4G手机</a
-                >
-              </div>
-              <p class="info-price">定金：¥100.00</p>
+              <p class="info-price">价格:¥{{ rank.price }}</p>
             </div>
           </div>
         </li>
@@ -96,8 +45,17 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "Rank",
+  mounted() {
+    this.$store.dispatch("getRankList");
+  },
+  computed: {
+    ...mapState({
+      rankList: (state) => state.home.rankList,
+    }),
+  },
 };
 </script>
 
@@ -159,9 +117,12 @@ export default {
 
   .content {
     overflow: hidden;
-    padding: 10px;
+    padding: 10px 0;
 
     ul {
+      background-color: #ddd;
+      display: flex;
+      justify-content: space-around;
       li {
         overflow: hidden;
         list-style: none;
@@ -172,10 +133,11 @@ export default {
           width: 269px;
           float: left;
           overflow: hidden;
-          margin: 0 12px 10px;
+          margin: 24px 12px;
           background: #fff;
+          transition: all 400ms;
           &:hover {
-            border: 1px solid #f07815;
+            transform: scale(1.05);
           }
 
           .tab-pic {

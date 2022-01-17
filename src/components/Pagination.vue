@@ -3,30 +3,51 @@
   <div class="fr page">
     <div class="sui-pagination clearfix">
       <ul>
-        <li class="prev disabled">
-          <a href="#">上一页</a>
+        <!-- 前面部分 -->
+        <li
+          class="prev"
+          :class="{ disabled: pageNo == 1 }"
+          @click="$emit('changePage', pageNo == 1 ? pageNo : pageNo - 1)"
+        >
+          <a>上一页</a>
         </li>
-        <li class="active">
-          <a href="#">1</a>
+        <li v-show="startNumorendNum.start > 1" @click="$emit('changePage', 1)">
+          <a>1</a>
         </li>
-        <li>
-          <a href="#">2</a>
+        <li class="dotted" v-show="startNumorendNum.start > 2">
+          <span>...</span>
         </li>
-        <li>
-          <a href="#">3</a>
+        <!-- 中间部分 -->
+        <li
+          v-for="(page, index) in startNumorendNum.end"
+          :key="index"
+          v-show="page >= startNumorendNum.start"
+          :class="{ active: pageNo === page }"
+          @click="getPage(page)"
+        >
+          <a>{{ page }}</a>
         </li>
-        <li>
-          <a href="#">4</a>
+        <!-- 后面部分 -->
+        <li class="dotted" v-show="startNumorendNum.end < totalPages - 1">
+          <span>...</span>
         </li>
-        <li>
-          <a href="#">5</a>
+        <li
+          v-show="startNumorendNum.end < totalPages"
+          @click="$emit('changePage', totalPages)"
+        >
+          <a>{{ totalPages }}</a>
         </li>
-        <li class="dotted"><span>...</span></li>
-        <li class="next">
-          <a href="#">下一页</a>
+        <li
+          class="next"
+          :class="{ disabled: pageNo == totalPages }"
+          @click="$emit('changePage', pageNo == totalPages ? totalPages : pageNo + 1)"
+        >
+          <a>下一页</a>
         </li>
       </ul>
-      <div><span>共10页&nbsp;</span></div>
+      <div>
+        <span>共{{ total }}条&nbsp;</span>
+      </div>
     </div>
   </div>
 </template>
@@ -34,8 +55,46 @@
 <script>
 export default {
   name: "Pagination",
+  props: ["pageNo", "pageSize", "total", "continues"],
+  //计算出总计多少页totalPages,连续页数的start和end页码数
+  computed: {
+    totalPages() {
+      return Math.ceil(this.total / this.pageSize);
+    },
+    //定义一个start页和end页
+    startNumorendNum() {
+      const { pageNo, totalPages, continues } = this;
+      let start = 1,
+        end = totalPages;
+      //如果连续页数设定为大于总页数，特殊情况
+      if (continues > totalPages) {
+        start = 1;
+        end = totalPages;
+      } else {
+        start = pageNo - parseInt(continues / 2); //可能小于1
+        end = pageNo + parseInt(continues / 2); //可能大于totalPages
+        //分如下情况讨论：
+        if (start < 1) {
+          start = 1;
+          end = continues;
+        }
+        if (end > totalPages) {
+          end = totalPages;
+          start = totalPages - continues + 1;
+        }
+      }
+      return { start, end }; //记得一定要有返回值start,end
+    },
+  },
+  methods: {
+    getPage(page) {
+      this.$emit("changePage", page); //子组件传递参数给父组件
+    },
+  },
 };
 </script>
+
+
 
 <style lang='less' scoped>
 .page {
@@ -50,12 +109,12 @@ export default {
       margin-left: 0;
       margin-bottom: 0;
       vertical-align: middle;
-      width: 490px;
       float: left;
 
       li {
         line-height: 18px;
         display: inline-block;
+        margin: 0 5px;
 
         a {
           position: relative;
@@ -68,13 +127,13 @@ export default {
           font-size: 14px;
           padding: 9px 18px;
           color: #333;
+          cursor: pointer;
         }
 
         &.active {
           a {
-            background-color: #fff;
-            color: #eb591f;
-            border-color: #fff;
+            background-color: #eb591f;
+            color: #fff;
             cursor: default;
           }
         }
@@ -87,8 +146,8 @@ export default {
 
         &.disabled {
           a {
-            color: #999;
-            cursor: default;
+            color: #ccc;
+            cursor: not-allowed; //禁止点击事件
           }
         }
 
@@ -118,6 +177,7 @@ export default {
       color: #333;
       font-size: 14px;
       float: left;
+      margin: 0 10px;
 
       span {
         line-height: 38px;

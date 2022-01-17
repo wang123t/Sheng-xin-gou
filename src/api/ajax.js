@@ -12,7 +12,7 @@ import axios from 'axios'
 import store from '@/store'
 import NProgress from 'nprogress'//引入进度条
 import 'nprogress/nprogress.css'
-
+NProgress.configure({parent:'.header'})//parent：指定此选项以更改父容器（默认：body）
 NProgress.configure({ showSpinner: false })//显示水平进度条
 
 //创建一个axios实例
@@ -22,6 +22,10 @@ const service = axios.create({
 })
 //请求拦截器
 service.interceptors.request.use((config) => {
+    //需要临时id
+    if (store.state.detail.nanoid_token) {
+         config.headers.userTempId = store.state.detail.nanoid_token
+    }
     //需要携带token给服务器验证登录信息
     if (store.state.user.token) {
         config.headers.token = store.state.user.token

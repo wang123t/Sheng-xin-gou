@@ -1,18 +1,21 @@
 <template>
   <div id="app">
     <Header />
-    <router-view></router-view>
+    <Search v-if="$route.meta.isShow"/>
+      <router-view></router-view>
     <Footer />
   </div>
 </template>
 <script>
 import Header from "./components/Header.vue";
+import Search from "./components/Search.vue";
 import Footer from "./components/Footer.vue";
 
 export default {
   name: "App",
   components: {
     Header,
+    Search,
     Footer,
   },
   mounted(){

@@ -43,10 +43,10 @@
       </p>
       <p>
         鄂公网安备 111122221111号 鄂ICP备123456789号
-        增值业务经营许可证：鄂111222333
-        网络文化经营许可证：鄂网文〔2021〕1209-2020号
+        增值业务经营许可证:鄂111222333
+        网络文化经营许可证:鄂网文20211209-2020号
       </p>
-      <p>违法和不良信息举报电话：123456789；举报邮箱：1507101635@vipshop.com</p>
+      <p>违法和不良信息举报电话:123456789；举报邮箱:1507101635@vipshop.com</p>
     </div>
   </div>
 </template>
@@ -68,7 +68,6 @@ export default {
   align-items: center;
   background-color: #ddd;
   padding-top: 50px;
-  margin: 0 20px;
 }
 p {
   text-align: center;

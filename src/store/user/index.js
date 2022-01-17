@@ -5,7 +5,7 @@ import {
     reqLoginOut,
     reqUserInfo
 } from '@/api';
-import { setToken, getToken, removeToken } from "@/tokens/token";
+import { setToken, getToken, removeToken ,setUserName,removeName} from "@/tokens/token";
 
 //登录与注册模块
 const state = {
@@ -28,8 +28,9 @@ const mutations = {
         //帮仓库中用户信息清空
         state.token = '';
         state.userInfo = {};
-        //本地存储数据清空
+        //本地||会话存储数据清空
         removeToken();
+        removeName();
     }
 };
 
@@ -64,6 +65,7 @@ const actions = {
             commit("USERLOGIN", result.data.token);
             //持久化存储token
             setToken(result.data.token);
+            setUserName(result.data.name);
             return "ok";
         } else {
             return Promise.reject(new Error("手机号或密码错误"));
@@ -77,6 +79,7 @@ const actions = {
             commit("GETUSERINFO", result.data);
             return 'ok';
         }
+
     },
     //退出登录
     async userLoginOut({ commit }) {

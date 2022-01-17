@@ -17,14 +17,24 @@
       </div>
       <div class="typeList">
         <ul>
-          <li><a href="">我的订单</a><span class="wall">|</span></li>
-          <li><a href="">我的购物车</a><span class="wall">|</span></li>
-          <li><a href="">我的省心购</a><span class="wall">|</span></li>
-          <li><a href="">我的会员</a><span class="wall">|</span></li>
-          <li><a href="">企业采购</a><span class="wall">|</span></li>
-          <li><a href="">关注我们</a><span class="wall">|</span></li>
-          <li><a href="">合作招商</a><span class="wall">|</span></li>
-          <li><a href="">商家后台</a></li>
+          <li>
+            <a href=""><i class="el-icon-s-order"></i>我的订单</a
+            ><span class="wall">|</span>
+          </li>
+          <li>
+            <router-link to="/shopcart"
+              ><i class="el-icon-shopping-cart-2"></i>我的购物车</router-link
+            ><span class="wall">|</span>
+          </li>
+          <li>
+            <a><i class="el-icon-s-promotion"></i>我的省心购</a
+            ><span class="wall">|</span>
+          </li>
+          <li>
+            <a><i class="el-icon-info"></i>我的会员</a
+            ><span class="wall">|</span>
+          </li>
+          <li><a><i class="el-icon-office-building"></i>商家后台</a></li>
         </ul>
       </div>
     </header>
@@ -34,35 +44,37 @@
 <script>
 export default {
   name: "Header",
-  data() {
-    return {};
-  },
   methods: {
     async LoginOut() {
       try {
         await this.$store.dispatch("userLoginOut"); //派发actions通知mutations清除token
         this.$router.push("/");
+        this.$router.go(0);
       } catch (error) {}
     },
   },
   computed: {
-    userName() {
-      return this.$store.state.user.userInfo.name;
-    },
+    userName(){
+      return localStorage.getItem('NAME')
+    }
   },
 };
 </script>
 
 <style scoped>
 .header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9999;
   background-color: #ddd;
   min-width: 1200px;
-  height: 50px;
+  height: 40px;
 }
 header {
   background-color: #ddd;
   width: 1200px;
-  height: 50px;
+  height: 40px;
   margin: 0 auto;
 }
 .loginList {
@@ -77,7 +89,7 @@ header {
 .loginList p {
   display: inline-block;
 }
-.loginList p a{
+.loginList p a {
   vertical-align: middle;
 }
 .loginList .loginshow a {
@@ -91,14 +103,22 @@ header {
   float: left;
 }
 .typeList ul li a {
-  line-height: 50px;
+  line-height: 40px;
   padding: 5px;
+  vertical-align: middle;
+}
+.typeList ul li a i {
+  font-size: 16px;
+  font-weight: 700;
+  color: #f66e12;
+  margin-right: 5px;
 }
 .welcome,
 .wall {
-  line-height: 50px;
+  line-height: 40px;
   vertical-align: middle;
 }
+
 .welcome {
   padding: 0 20px 0 0;
   color: #f66e12;

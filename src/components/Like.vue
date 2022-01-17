@@ -7,46 +7,11 @@
       </div>
       <div class="bd">
         <ul class="favourate">
-          <li>
-            <img src="../assets/images/like/like1.png" alt="" />
+          <li v-for="like in likeList" :key="like.id">
+            <img :src="like.imgUrl" />
             <div class="like-text">
-              <p>阳光美包新款单肩包女包时尚子母包四件套女</p>
-              <h3>¥116.00</h3>
-            </div>
-          </li>
-          <li>
-            <img src="../assets/images/like/like2.png" alt="" />
-            <div class="like-text">
-              <p>阳光美包新款单肩包女包时尚子母包四件套女</p>
-              <h3>¥116.00</h3>
-            </div>
-          </li>
-          <li>
-            <img src="../assets/images/like/like3.png" alt="" />
-            <div class="like-text">
-              <p>阳光美包新款单肩包女包时尚子母包四件套女</p>
-              <h3>¥116.00</h3>
-            </div>
-          </li>
-          <li>
-            <img src="../assets/images/like/like1.png" alt="" />
-            <div class="like-text">
-              <p>阳光美包新款单肩包女包时尚子母包四件套女</p>
-              <h3>¥116.00</h3>
-            </div>
-          </li>
-          <li>
-            <img src="../assets/images/like/like3.png" alt="" />
-            <div class="like-text">
-              <p>阳光美包新款单肩包女包时尚子母包四件套女</p>
-              <h3>¥116.00</h3>
-            </div>
-          </li>
-          <li>
-            <img src="../assets/images/like/like2.png" alt="" />
-            <div class="like-text">
-              <p>阳光美包新款单肩包女包时尚子母包四件套女</p>
-              <h3>¥116.00</h3>
+              <p>{{ like.skuDec }}</p>
+              <h3>¥{{ like.price }}</h3>
             </div>
           </li>
         </ul>
@@ -56,8 +21,17 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "",
+  computed: {
+    ...mapState({
+      likeList: (state) => state.home.likeList,
+    }),
+  },
+  mounted() {
+    this.$store.dispatch("getLikeList");
+  },
 };
 </script>
 
@@ -101,20 +75,21 @@ export default {
         display: flex;
 
         li {
-          height: 250px;
-          margin: 0 -1px;
+          width: 250px;
+          padding: 30px;
           overflow: hidden;
           background: #fff;
           position: relative;
-          width: 16.667%;
           display: flex;
           flex-direction: column;
           align-items: center;
           cursor: pointer;
 
           img {
-            width: 142px;
-            height: 142px;
+            display: block;
+            width: 150px;
+            height: 200px;
+            background-size: cover;
             transition: all 400ms;
 
             &:hover {
@@ -125,18 +100,18 @@ export default {
 
           .like-text {
             padding: 0;
-            width: 142px;
-            border-right: 1px solid #e4e4e4;
+            width: 150px;
 
             p {
-              margin: 5px 0;
+              overflow: hidden;
+              height: 60px;
+              margin: 5px;
             }
 
             h3 {
               color: #df3033;
               font-size: 20px;
               line-height: 30px;
-              margin: 9px 0;
               font-weight: 700;
             }
           }

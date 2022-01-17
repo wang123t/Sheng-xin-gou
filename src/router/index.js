@@ -6,6 +6,9 @@ import Home from '@/views/Home'
 import Login from '@/views/Login'
 import Register from '@/views/Register'
 import SearchGo from '@/views/SearchGo'
+import Detail from '@/views/Detail'
+import Addshopcart from '@/views/Addshopcart'
+import Shopcart from '@/views/Shopcart'
 
 
 import store from "@/store";
@@ -32,27 +35,64 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
   }
 }
 const router = new VueRouter({
+  mode: 'hash',//默认路由工作模式为hash模式
   routes: [
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      meta: {
+        isShow:true
+      }
     },
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: Login,
+      meta: {
+        isShow:false
+      }
     },
     {
       path: '/register',
       name: 'register',
-      component: Register
+      component: Register,
+      meta: {
+        isShow:false
+      }
     },
     {
-      path: '/searchGo/:keyword?',//params路由传参，需要在路由path后面添加参数名，否则路由跳转没有内容
+      path: '/searchGo/:keyword?',//params路由传参(可选参数需要加?)，需要在路由path后面添加参数名，否则路由跳转没有内容
       name: 'searchGo',
-      component: SearchGo
+      component: SearchGo,
+      meta: {
+        isShow:false
+      }
     },
+    {
+      path: '/detail/:skuId',//params路由传参
+      name: 'detail',
+      component: Detail,
+      meta: {
+        isShow:false
+      }
+    },
+    {
+      path: '/addshopcart',
+      name: 'addshopcart',
+      component: Addshopcart,
+      meta: {
+        isShow:true
+      }
+    },
+    {
+      path: '/shopcart',
+      name: 'shopcart',
+      component: Shopcart,
+      meta: {
+        isShow:true
+      }
+    }
   ]
 })
 
@@ -64,7 +104,7 @@ router.beforeEach(async (to, from, next) => {
   next();
   const token = store.state.user.token;
   const name = store.state.user.userInfo.name;
-  if (token&&name) {
+  if (token && name) {
     // 登录了
     if (to.path == '/login' || to.path == '/register') {
       next('/');
@@ -86,6 +126,10 @@ router.beforeEach(async (to, from, next) => {
     }
   } else {
     //未登录
+    //不能访问订单，购物车
+    // if (to.path == '/shopcart') {
+    //   next('/login')
+    // }
     next()
   }
 })

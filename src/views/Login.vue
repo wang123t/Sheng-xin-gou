@@ -82,7 +82,8 @@ export default {
             phone,
             password,
           });
-          this.$router.push("/");//登录成功跳转至home页
+          this.$router.push("/");
+          location.reload();//登录成功跳转至home页
           console.log('登录成功')
         } else{
           alert('手机号或密码不能为空')
@@ -99,7 +100,7 @@ export default {
 .login-wrap {
   height: 460px;
   background-color: #fff;
-  margin: 0 auto;
+  margin: 40px auto 0;
 }
 .login-wrap .login {
   width: 1200px;

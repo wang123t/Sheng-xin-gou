@@ -38,7 +38,7 @@
 
 <script>
 export default {
-  name: "Register", //注册的组件
+  name: "Register",
   data() {
     return {
       phone: "",
@@ -56,7 +56,7 @@ export default {
         //如果获取到验证码
         const { phone } = this;
         phone && (await this.$store.dispatch("GetCode", phone));
-        //将组件的code属性值变为仓库中验证码[验证码直接自己填写了]
+        //将组件的code属性值变为仓库中验证码
         this.code = this.$store.state.user.code;
       } catch (error) {}
     },
@@ -91,7 +91,7 @@ export default {
   width: 1200px;
   height: 450px;
   border: 1px solid #dfdfdf;
-  margin: 0 auto;
+  margin: 40px auto 0;
 }
 
 .register h3 {

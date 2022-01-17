@@ -113,7 +113,7 @@ export default {
     goSearch(event) {
       //event.target:获取到的是出发事件的元素(div、h3、a、em、dt、dl)
       let node = event.target;
-      //给a标签添加自定义属性data-categoryName,全部的字标签当中只有a标签带有自定义属性，别的标签名字--
+      //给a标签添加自定义属性data-categoryName,全部的字标签当中只有a标签带有自定义属性
       let { categoryname, category1id, category2id, category3id } =
         node.dataset;
       //第二个问题解决了：点击的到底是不是a标签（只要这个标签身上带有categoryname）一定是a标签
@@ -132,7 +132,7 @@ export default {
         } else {
           query.category3Id = category3id;
         }
-        //判断：如果路由跳转的时候，带有params参数，捎带脚传递过去
+        //判断：如果路由跳转的时候，带有params参数传递过去
         if (this.$route.params) {
           loction.params = this.$route.params;
           //动态给location配置对象添加query属性
@@ -165,8 +165,9 @@ a{
   width: 200px;
   padding: 10px;
   text-align: center;
+  margin-bottom: 1px;
   background-color: #f66e12;
-  color: #fff;
+  color:#fff;
 }
 .nav .container h2,
 .nav .container nav {
@@ -185,7 +186,8 @@ a{
   top: 50px;
   width: 200px;
   height: 460px;
-  background-color: #fff;
+  margin-top: 3px;
+  background-color: #f66e12;
   position: absolute;
   z-index: 999;
 }
@@ -254,7 +256,7 @@ a{
 /* 过渡动画 */
 .sort-enter-active,
 .sort-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity 0.2s;
 }
 .sort-enter,
 .sort-leave-to {

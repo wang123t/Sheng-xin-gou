@@ -34,7 +34,7 @@ export default {
 <style scoped>
 .today-recommend .py-container {
   width: 1200px;
-  margin: 0 auto;
+  margin: 50px auto 20px;
 }
 .today-recommend .py-container .recommend {
   height: 165px;

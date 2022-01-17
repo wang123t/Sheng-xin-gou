@@ -9,21 +9,32 @@
         <div class="bread">
           <ul class="fl sui-breadcrumb">
             <li>
-              <a href="#">全部结果</a>
+              <a>全部结果</a>
             </li>
           </ul>
+          <!-- 面包屑tag -->
           <ul class="fl sui-tag">
-            <li class="with-x" v-show="searchParams.categoryName">
-              {{ searchParams.categoryName
-              }}<i class="el-icon-close" @click="removeCategoryName"></i>
+            <li
+              class="with-x"
+              v-show="searchParams.categoryName"
+              @click="removeCategoryName"
+            >
+              {{ searchParams.categoryName }}<i class="el-icon-close"></i>
             </li>
-            <li class="with-x" v-show="searchParams.keyword">
-              {{ searchParams.keyword
-              }}<i class="el-icon-close" @click="removeKeyword"></i>
+            <li
+              class="with-x"
+              v-show="searchParams.keyword"
+              @click="removeKeyword"
+            >
+              {{ searchParams.keyword }}<i class="el-icon-close"></i>
             </li>
-            <li class="with-x" v-show="searchParams.trademark">
+            <li
+              class="with-x"
+              v-show="searchParams.trademark"
+              @click="removetrademark"
+            >
               {{ searchParams.trademark.split(":")[1] }}
-              <i class="el-icon-close" @click="removetrademark"></i>
+              <i class="el-icon-close"></i>
             </li>
           </ul>
         </div>
@@ -69,9 +80,10 @@
               <li class="yui3-u-1-5" v-for="good in goodsList" :key="good.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="" target="_blank"
+                    <!-- 动态绑定路由跳转，带上参数id（params）参数 -->
+                    <router-link :to="`/detail/${good.id}`"
                       ><img :src="good.defaultImg"
-                    /></a>
+                    /></router-link>
                   </div>
                   <div class="price">
                     <strong>
@@ -80,17 +92,19 @@
                     </strong>
                   </div>
                   <div class="attr">
-                    <a target="_blank" href="">{{ good.title }}</a>
+                    <router-link :to="`/detail/${good.id}`">{{
+                      good.title
+                    }}</router-link>
                   </div>
                   <div class="commit">
                     <i class="command">已有<span>2000</span>人评价</i>
                   </div>
                   <div class="operate">
-                    <a
-                      href="success-cart.html"
-                      target="_blank"
+                    <router-link
                       class="sui-btn btn-bordered btn-danger"
-                      >加入购物车</a
+                      :to="`/detail/${good.id}`"
+                    >
+                      加入购物车</router-link
                     >
                     <a href="javascript:void(0);" class="sui-btn btn-bordered"
                       >收藏</a
@@ -101,17 +115,23 @@
             </ul>
           </div>
         </div>
-        <Pagination />
+        <!-- 自定义事件，子传父，在父组件上绑定自定义事件，定义事件名@'xxx',回调名'xxxx' -->
+        <Pagination
+          :pageNo="searchParams.pageNo"
+          :pageSize="searchParams.pageSize"
+          :total="total"
+          :continues="5"
+          @changePage="changePage"
+        />
       </div>
     </div>
-    <!-- 搜索的list -->
   </div>
 </template>
 
 <script>
 import Search from "../components/Search.vue";
 import SearchSelector from "../components/SearchSelector.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 export default {
   name: "SearchGo",
   components: {
@@ -130,8 +150,8 @@ export default {
         //搜索的关键字
         keyword: "",
         //排序:初始状态应该是综合且降序
-        order: "1:desc",
-        //第几页
+        order: "2:desc",
+        //当前第几页
         pageNo: 1,
         //每一页展示条数
         pageSize: 10,
@@ -152,6 +172,10 @@ export default {
   computed: {
     //mapGetters里面的写法：传递的数组，因为getters计算是没有划分模块【home,search】
     ...mapGetters(["goodsList"]),
+    //mapState拿到仓库里的total数据
+    ...mapState({
+      total: (state) => state.search.searchList.total,
+    }),
     isOne() {
       return this.searchParams.order.includes("1");
     },
@@ -174,11 +198,13 @@ export default {
       this.searchParams.category1Id = undefined;
       this.searchParams.category2Id = undefined;
       this.searchParams.category3Id = undefined;
+      this.searchParams.pageNo = 1; //重置pageNo当前页为1
       this.getData(); //清空后发一次请求，展示默认信息
       this.$router.push({ name: "searchGo", params: this.$route.params }); //清空路由的query参数，保留keyword参数
     },
     removeKeyword() {
       this.searchParams.keyword = undefined;
+      this.searchParams.pageNo = 1; //重置pageNo当前页为1
       this.getData();
       this.$bus.$emit("clear"); //全局事件总线$emit触发回调
       this.$router.push({ name: "searchGo", query: this.$route.query }); //清空keyword，但考虑保留query参数
@@ -186,10 +212,12 @@ export default {
     //自定义事件的回调
     gettrademark(trademark) {
       this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`; //拿到value,组合成新对象
+      this.searchParams.pageNo = 1; //重置pageNo当前页为1
       this.getData();
     },
     removetrademark() {
       this.searchParams.trademark = "";
+      this.searchParams.pageNo = 1; //重置pageNo当前页为1
       this.getData();
     },
     changeOrder(flag) {
@@ -201,16 +229,25 @@ export default {
       if (flag == originFlag) {
         newOrder = `${originFlag}:${originSort == "desc" ? "asc" : "desc"}`; //重新赋值给newOrder
       } else {
+        //每次切换，初始的order的排序状态均为desc
         newOrder = `${flag}:${"desc"}`;
       }
       this.searchParams.order = newOrder; //重新赋值给data里的order
       this.getData(); //再次发送请求
+    },
+    //自定义事件的回调
+    changePage(pageNo) {
+      //拿到pageNo后，重新整理searchParams参数
+      this.searchParams.pageNo = pageNo;
+      //重新发送请求
+      this.getData();
     },
   },
   watch: {
     //数据监听：监听组件实例身上的属性变化
     $route(newValue, oldValue) {
       Object.assign(this.searchParams, this.$route.query, this.$route.params);
+      this.searchParams.pageNo = 1; //重置pageNo当前页为1
       this.getData();
       this.searchParams.category1Id = undefined;
       this.searchParams.category2Id = undefined;
@@ -265,14 +302,13 @@ export default {
 
         .with-x {
           font-size: 12px;
-          margin: 0 5px 5px 0;
           display: inline-block;
           overflow: hidden;
           color: #000;
           background: #f7f7f7;
-          padding: 0 7px;
-          height: 20px;
-          line-height: 20px;
+          padding: 3px 7px;
+          height: 27px;
+          line-height: 21px;
           border: 1px solid #dedede;
           white-space: nowrap;
           transition: color 400ms;
@@ -284,7 +320,6 @@ export default {
             font: 400 14px tahoma;
             display: inline-block;
             height: 100%;
-            vertical-align: middle;
           }
 
           &:hover {

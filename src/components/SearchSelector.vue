@@ -75,15 +75,15 @@ export default {
     .key {
       width: 100px;
       background: #f1f1f1;
-      line-height: 26px;
       text-align: right;
-      padding: 10px 10px 0 15px;
       float: left;
+      line-height: 37px;
+      padding: 0 10px 0 0 ;
     }
 
     .value {
       overflow: hidden;
-      padding: 10px 0 0 15px;
+      padding: 8px 0 0 15px;
       color: #333;
       margin-left: 120px;
       padding-right: 90px;

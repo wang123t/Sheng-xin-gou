@@ -46,7 +46,7 @@ export default {
 
 <style scoped>
 .search {
-  margin: 50px auto;
+  margin: 100px auto;
   display: flex;
   justify-content: center;
 }

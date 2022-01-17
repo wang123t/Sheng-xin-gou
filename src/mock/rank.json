@@ -1,0 +1,26 @@
+[
+    {
+        "id": "1",
+        "imgUrl": "/images/rank/rank01.jpg",
+        "price":"5999",
+        "skuDec":"Apple iPhone 13 (A2634) 128GB 星光色 支持移动联通电信5G 双卡双待手机 【新年有新意】15-16号购机享12期免息&30"
+    },
+    {
+        "id": "2",
+        "imgUrl": "/images/rank/rank02.jpg",
+        "price":"8799",
+        "skuDec":"Apple iPhone 13 Pro (A2634) 128GB 远峰蓝色 支持移动联通电信5G 双卡双待"
+    },
+    {
+        "id": "3",
+        "imgUrl": "/images/rank/rank03.jpg",
+        "price":"6799",
+        "skuDec":" Apple iPhone 13 (A2634) 256GB 粉色 支持移动联通电信5G 双卡双待手机 【新年有新意】15-16号购机享12期免息&30天价保 "
+    },
+    {
+        "id": "4",
+        "imgUrl": "/images/rank/rank04.jpg",
+        "price":"9799",
+        "skuDec":"Apple iPhone 13 Pro Max (A2644) 256GB 金色 支持移动联通电信5G 双卡双待手机 【新年有新意】15-16号购机享12期免息&30天价保"
+    }
+]

@@ -1,11 +1,11 @@
 /* 清除浏览器默认样式 */
-@import "./iconfont.css";
+@import "./reset.css";
  
 /* 清除内外边距 */
 body, h1, h2, h3, h4, h5, h6, hr, p, blockquote,
 dl, dt, dd, ul, ol, li,
 pre,
-fieldset, lengend, button, input, textarea,
+fieldset, legend, button, input, textarea,
 th, td {
     margin: 0;
     padding: 0;
@@ -34,13 +34,13 @@ small { font-size: 12px; } /* 小于 12px 的中文很难阅读，让 small 正�
 ul, ol { list-style: none; }
 
 /* 重置文本格式元素 */
-a { text-decoration: none; color: #666;}
+a { text-decoration: none; color: #666;cursor: pointer;}
 
 
 /* 重置表单元素 */
 legend { color: #000; } /* for ie6 */
 fieldset, img { border: none; }
-button, input, select, textarea {
+button, input, select, textarea ,form {
     font-size: 100%; /* 使得表单元素在 ie 下能继承字体大小 */
 }
 
