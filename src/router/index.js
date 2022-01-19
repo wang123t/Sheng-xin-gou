@@ -42,7 +42,7 @@ const router = new VueRouter({
       name: 'home',
       component: Home,
       meta: {
-        isShow:true
+        isShow: true
       }
     },
     {
@@ -50,7 +50,7 @@ const router = new VueRouter({
       name: 'login',
       component: Login,
       meta: {
-        isShow:false
+        isShow: false
       }
     },
     {
@@ -58,7 +58,7 @@ const router = new VueRouter({
       name: 'register',
       component: Register,
       meta: {
-        isShow:false
+        isShow: false
       }
     },
     {
@@ -66,7 +66,7 @@ const router = new VueRouter({
       name: 'searchGo',
       component: SearchGo,
       meta: {
-        isShow:false
+        isShow: false
       }
     },
     {
@@ -74,7 +74,7 @@ const router = new VueRouter({
       name: 'detail',
       component: Detail,
       meta: {
-        isShow:false
+        isShow: false
       }
     },
     {
@@ -82,7 +82,7 @@ const router = new VueRouter({
       name: 'addshopcart',
       component: Addshopcart,
       meta: {
-        isShow:true
+        isShow: true
       }
     },
     {
@@ -90,7 +90,7 @@ const router = new VueRouter({
       name: 'shopcart',
       component: Shopcart,
       meta: {
-        isShow:true
+        isShow: true
       }
     }
   ]
@@ -104,7 +104,7 @@ router.beforeEach(async (to, from, next) => {
   next();
   const token = store.state.user.token;
   const name = store.state.user.userInfo.name;
-  if (token && name) {
+  if (token) {
     // 登录了
     if (to.path == '/login' || to.path == '/register') {
       next('/');
@@ -127,9 +127,9 @@ router.beforeEach(async (to, from, next) => {
   } else {
     //未登录
     //不能访问订单，购物车
-    // if (to.path == '/shopcart') {
-    //   next('/login')
-    // }
+    if (to.path == '/shopcart') {
+      next('/')
+    }
     next()
   }
 })

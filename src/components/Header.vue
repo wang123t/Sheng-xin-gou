@@ -49,13 +49,12 @@ export default {
       try {
         await this.$store.dispatch("userLoginOut"); //派发actions通知mutations清除token
         this.$router.push("/");
-        this.$router.go(0);
       } catch (error) {}
     },
   },
   computed: {
     userName(){
-      return localStorage.getItem('NAME')
+      return this.$store.state.user.userInfo.name;
     }
   },
 };

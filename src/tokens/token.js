@@ -12,11 +12,3 @@ export const getToken = () => {
 export const removeToken = () => {
     localStorage.removeItem("TOKEN");
 }
-//存储userName
-export const setUserName = (name) => {
-    localStorage.setItem("NAME", name);
-}
-//清除userName
-export const removeName = () => {
-    localStorage.removeItem('NAME')
-}

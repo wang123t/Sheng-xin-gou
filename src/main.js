@@ -1,20 +1,22 @@
 import Vue from 'vue'
 import router from './router'
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
 import App from './App.vue'
 import store from './store'
 import Nav from "./components/Nav.vue";//引入全局组件Nav，Pagination
 import Pagination from "./components/Pagination.vue";
+import { Button, Icon } from 'element-ui';
 
 Vue.config.productionTip = false
+//按需引入element-Ui
+Vue.component(Button.name, Button);
+Vue.component(Icon.name,Icon)
 //注册全局组件Nav，Pagination
 Vue.component(Nav.name, Nav);
 Vue.component(Pagination.name, Pagination);
 
-Vue.use(ElementUI);
 //引入swiper样式
 import 'swiper/swiper-bundle.css'
+//接口函数统一注册到全局，方便在组件发请求
 import * as API from '@/api';
 //引入mockServe.js---mock数据
 import '@/mock/mockServer.js'

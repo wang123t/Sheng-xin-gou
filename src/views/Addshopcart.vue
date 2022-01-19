@@ -19,7 +19,7 @@
               >
                 {{ skuAttr.saleAttrName }}<span>:</span
                 >{{
-                  newArr[index].filter((item) => item.isChecked == 1)[0]
+                  newArr.length == 0 ? '未知': newArr[index].filter((item) => item.isChecked == 1)[0]
                     .saleAttrValueName
                 }}
               </p>
@@ -27,7 +27,9 @@
             </div>
           </div>
           <div class="right-gocart">
-            <router-link :to="`/detail/${skuInfo.id}`" class="btn-danger">查看商品详情</router-link>
+            <router-link :to="`/detail/${skuInfo.id}`" class="btn-danger"
+              >查看商品详情</router-link
+            >
             <router-link to="/shopcart">去购物车结算 </router-link>
           </div>
         </div>
@@ -63,6 +65,7 @@ export default {
       return this.spuSaleAttrList.map((item) => item.spuSaleAttrValueList);
     },
   },
+  
 };
 </script>
 

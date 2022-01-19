@@ -155,20 +155,36 @@ export default {
     },
     //加入购物车,提示用户是否加入成功，函数调用返回的是一个Promise对象
     getAddshopcart() {
-      try {
-        this.$store.dispatch("getAddshopcart", {
-          skuId: this.$route.params.skuId,
-          skuNum: this.Num,
-        });
-        this.$router.push({ name: "addshopcart", query: { skuNum: this.Num } });
-        //会话存储商品信息对象(存储的为字符串，需要字符串化，JSON.stringfy)
-        sessionStorage.setItem("ADDSHOPCARTINFO", JSON.stringify(this.skuInfo));
-        sessionStorage.setItem(
-          "ADDSHOPCARTINFO1",
-          JSON.stringify(this.spuSaleAttrList)
-        );
-      } catch (error) {
-        alert(error.message);
+      //加入购物车之前，判断是否登录
+      if (this.$store.state.user.userInfo.name) {
+        try {
+          this.$store.dispatch("getAddshopcart", {
+            skuId: this.$route.params.skuId,
+            skuNum: this.Num,
+          });
+          this.$router.push({
+            name: "addshopcart",
+            query: { skuNum: this.Num },
+          });
+          //会话存储商品信息对象(存储的为字符串，需要字符串化，JSON.stringfy)
+          sessionStorage.setItem(
+            "ADDSHOPCARTINFO",
+            JSON.stringify(this.skuInfo)
+          );
+          sessionStorage.setItem(
+            "ADDSHOPCARTINFO1",
+            JSON.stringify(this.spuSaleAttrList)
+          );
+        } catch (error) {
+          alert(error.message);
+        }
+      } else {
+        let C = confirm("请确认是否登录");
+        if (C) {
+          this.$router.push("/login");
+        } else {
+          this.$router.go(0);
+        }
       }
     },
   },
