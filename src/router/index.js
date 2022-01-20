@@ -105,25 +105,25 @@ router.beforeEach(async (to, from, next) => {
   const token = store.state.user.token;
   const name = store.state.user.userInfo.name;
   if (token) {
-    // 登录了
-    if (to.path == '/login' || to.path == '/register') {
-      next('/');
-    } else {
-      //登录访问别的路由
-      if (name) {
-        next();
+    //登录且有用户信息访问的路由
+    if (name) {
+      if (to.path == '/login' || to.path == '/register') {
+        next('/');
       } else {
-        try {
-          // 登录了但没有用户信息
-          await store.dispatch('getUserInfo');
-          next();
-        } catch (error) {
-          //token失效了需要重新登录
-          await store.dispatch('userLoginOut');
-          next('/login')
-        }
+        next();
+      }
+    } else {
+      try {
+        // 登录了但没有用户信息
+        await store.dispatch('getUserInfo');
+        next();
+      } catch (error) {
+        //token失效了需要重新登录
+        await store.dispatch('userLoginOut');
+        next('/login')
       }
     }
+
   } else {
     //未登录
     //不能访问订单，购物车
