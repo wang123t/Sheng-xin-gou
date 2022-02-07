@@ -8,12 +8,14 @@ import user from './user'
 import search from './search'
 import detail from './detail'
 import shopcart from './shopcart'
+import trade from './trade'
 export default new Vuex.Store({
   modules: {
     home,
     user,
     search,
     detail,
-    shopcart
+    shopcart,
+    trade
   }//配置store的模块
 })

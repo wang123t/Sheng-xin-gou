@@ -12,13 +12,14 @@
         <p v-else class="loginshow">
           <a>{{ userName }}</a
           ><span class="wall">|</span>
-          <a @click="LoginOut">退出登录</a>
+          <a @click="open" type="text">退出登录</a>
         </p>
       </div>
       <div class="typeList">
         <ul>
           <li>
-            <a href=""><i class="el-icon-s-order"></i>我的订单</a
+            <router-link to="/center"
+              ><i class="el-icon-s-order"></i>我的订单 </router-link
             ><span class="wall">|</span>
           </li>
           <li>
@@ -34,7 +35,9 @@
             <a><i class="el-icon-info"></i>我的会员</a
             ><span class="wall">|</span>
           </li>
-          <li><a><i class="el-icon-office-building"></i>商家后台</a></li>
+          <li>
+            <a><i class="el-icon-office-building"></i>商家后台</a>
+          </li>
         </ul>
       </div>
     </header>
@@ -45,17 +48,44 @@
 export default {
   name: "Header",
   methods: {
-    async LoginOut() {
-      try {
-        await this.$store.dispatch("userLoginOut"); //派发actions通知mutations清除token
-        this.$router.push("/");
-      } catch (error) {}
+     open() {
+      this.$confirm("请确认是否退出登录?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+        zIndex:10000,
+        beforeClose: async(action, instance, done) => {
+          //如果确认退出
+          if (action == "confirm") {
+            try {
+              //派发actions通知mutations清除token
+              await this.$store.dispatch("userLoginOut"); 
+              this.$router.push("/");
+            } catch (error) {}
+            done();//关闭提示框
+          }else{
+            done();
+          }
+        },
+      })
+        .then(() => {
+          this.$message({
+            type: "success",
+            message: "退出成功!",
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "取消退出",
+          });
+        });
     },
   },
   computed: {
-    userName(){
+    userName() {
       return this.$store.state.user.userInfo.name;
-    }
+    },
   },
 };
 </script>

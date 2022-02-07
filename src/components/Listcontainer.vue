@@ -104,7 +104,7 @@ export default {
 .swiper {
   position: relative;
   width: 750px;
-  --swiper-pagination-color: #fffb00;
+  --swiper-pagination-color: #ddd;
 }
 .swiper-wrapper {
   width: 750px;

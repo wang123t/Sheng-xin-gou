@@ -1,0 +1,99 @@
+<template>
+  <div class="order-main">
+    <div class="container">
+      <div class="order-body">
+        <!--左侧列表-->
+        <div class="order-left">
+          <dl>
+            <dt><i class="el-icon-s-order"></i> 订单中心</dt>
+            <dd><router-link to="/center/myorder">我的订单</router-link></dd>
+            <dd><router-link to="/center/group">团购订单</router-link></dd>
+            <dd>本地生活订单</dd>
+            <dd>我的预售</dd>
+            <dd>评价晒单</dd>
+            <dd>取消订单记录</dd>
+          </dl>
+          <dl>
+            <dt><i class="el-icon-s-help"></i> 关注中心</dt>
+            <dd>关注的商品</dd>
+            <dd>关注的店铺</dd>
+            <dd>关注的专辑</dd>
+            <dd>关注的品牌</dd>
+            <dd>关注的活动</dd>
+            <dd>浏览历史</dd>
+          </dl>
+
+          <dl>
+            <dt><i class="el-icon-question"></i> 客户服务</dt>
+            <dd>返修退换货</dd>
+            <dd>价格保护</dd>
+            <dd>意见建议</dd>
+            <dd>购买咨询</dd>
+            <dd>交易纠纷</dd>
+            <dd>我的发票</dd>
+          </dl>
+          <dl>
+            <dt><i class="el-icon-s-tools"></i> 设置</dt>
+            <dd>个人信息</dd>
+            <dd>收货地址</dd>
+          </dl>
+        </div>
+        <!-- 右侧内容 -->
+        <!-- 路由出口 -->
+        <router-view></router-view>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Center",
+  
+};
+</script>
+
+<style lang="less" scoped>
+.order-main {
+  .container {
+    margin: 0 auto;
+    width: 1200px;
+
+    .order-body {
+      padding: 10px;
+      color: #333;
+
+      &:after {
+        content: "";
+        display: block;
+        clear: both;
+      }
+
+      //左边
+      .order-left {
+        float: left;
+        width: 16.67%;
+
+        dl {
+          line-height: 28px;
+
+          dt {
+            font-weight: 700;
+            padding: 5px;
+
+            i {
+              color: #e75d1d;
+            }
+          }
+
+          dd {
+            margin: 0 0 6px;
+            border-bottom: 1px solid #ededed;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}
+</style>

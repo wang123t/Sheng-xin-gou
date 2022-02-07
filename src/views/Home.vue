@@ -6,7 +6,6 @@
       <Recommend />
       <Rank />
       <Like />
-      <!-- <Floor/> -->
       <Brand />
     </div>
   </div>
@@ -17,7 +16,6 @@ import Listcontainer from "../components/Listcontainer.vue";
 import Recommend from "../components/Recommend.vue";
 import Rank from "../components/Rank.vue";
 import Like from "../components/Like.vue";
-import Floor from "../components/Floor.vue";
 import Brand from "../components/Brand.vue";
 export default {
   name: "Home",
@@ -26,7 +24,6 @@ export default {
     Recommend,
     Rank,
     Like,
-    Floor,
     Brand,
   },
   mounted() {

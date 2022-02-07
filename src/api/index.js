@@ -36,7 +36,7 @@ export const reqLoginOut = () => service({ url: '/user/passport/logout', method:
 export const reqGoodsInfo = (skuId) => service({ url: `/item/${skuId}`, method: 'get' })
 
 //将产品添加到购物车中（获取更新某一个产品的个数）
-///api/cart/addToCart/{ skuId }/{ skuNum }  POST
+//URL:/api/cart/addToCart/{ skuId }/{ skuNum }  POST
 export const reqAddshopcart = (skuId, skuNum) => service({ url: `/cart/addToCart/${skuId}/${skuNum}`, method: 'post' })
 
 //获取购物车列表数据接口
@@ -50,3 +50,27 @@ export const reqDeleteCart = (skuId) => service({ url: `/cart/deleteCart/${skuId
 //修改商品的选中状态
 //URL:/api/cart/checkCart/{skuId}/{isChecked}   method:get 
 export const reqchangeChecked = (skuId, isChecked) => service({ url: `/cart/checkCart/${skuId}/${isChecked}`, method: 'get' })
+
+//获取用户地址信息
+//URL:/api/user/userAddress/auth/findUserAddressList GET
+export const reqUserAddress = ()=>service({url:'/user/userAddress/auth/findUserAddressList',method:'get'}) 
+
+//获取订单交易的接口
+//URL:/api/order/auth/trade  GET
+export const reqGetOrderTrade = () =>service({url:'/order/auth/trade',method:'get'})
+
+//提交订单
+//URL:/api/order/auth/submitOrder?tradeNo={tradeNo}  POST
+export const reqSubmitOrder=(tradeNo,data) =>service({url:`/order/auth/submitOrder?tradeNo=${tradeNo}`,data,method:'post'})
+
+//获取支付信息
+//URL:/api/payment/weixin/createNative/{orderId}  GET
+export const reqPayOrderInfo=(orderId)=>service({url:`/payment/weixin/createNative/${orderId}`,method:'get'})
+
+//获取支付状态信息
+//URL:/api/payment/weixin/queryPayStatus/{orderId} get
+export const reqPayStatus = (orderId)=>service({url:`/payment/weixin/queryPayStatus/${orderId}`,method:'get'})
+
+//获取我的订单列表
+//URL：/api/order/auth/{page}/{limit} GET
+export const reqMyOrderList = (page,limit)=>service({url:`/order/auth/${page}/${limit}`,method:'get'})

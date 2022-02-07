@@ -19,8 +19,7 @@
               >
                 {{ skuAttr.saleAttrName }}<span>:</span
                 >{{
-                  newArr.length == 0 ? '未知': newArr[index].filter((item) => item.isChecked == 1)[0]
-                    .saleAttrValueName
+                  newArr.length == 0 ? '未知': newArr[index].filter((item) => item.isChecked == 1)[0].saleAttrValueName
                 }}
               </p>
               数量<span>{{ $route.query.skuNum }}</span>

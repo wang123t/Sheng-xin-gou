@@ -82,7 +82,8 @@ export default {
             phone,
             password,
           });
-          this.$router.push("/");//登录成功跳转至home页
+          let topath = this.$route.query.redirect ||'/'
+          this.$router.push(topath);//登录成功跳转至home页或者未登录时想去的路由
           console.log('登录成功')
         } else{
           alert('手机号或密码不能为空')

@@ -77,7 +77,7 @@
           <i class="summoney">￥{{ totalPrice }}</i>
         </div>
         <div class="sumbtn">
-          <a class="sum-btn">结算</a>
+          <a class="sum-btn" @click="goTrade">结算</a>
         </div>
       </div>
     </div>
@@ -201,6 +201,10 @@ export default {
         alert('购物车为空');
       }
     },
+    //去结算
+    goTrade(){
+      this.$router.push('/trade')
+    }
   },
 };
 </script>

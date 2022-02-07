@@ -9,6 +9,12 @@ import SearchGo from '@/views/SearchGo'
 import Detail from '@/views/Detail'
 import Addshopcart from '@/views/Addshopcart'
 import Shopcart from '@/views/Shopcart'
+import Trade from '@/views/Trade'
+import Pay from '@/views/Pay'
+import Paysuccess from '@/views/Paysuccess'
+import Center from '@/views/Center'
+import Myorder from '@/views/Center/Myorder'
+import Group from '@/views/Center/Group'
 
 
 import store from "@/store";
@@ -75,7 +81,7 @@ const router = new VueRouter({
       component: Detail,
       meta: {
         isShow: false
-      }
+      },
     },
     {
       path: '/addshopcart',
@@ -83,7 +89,7 @@ const router = new VueRouter({
       component: Addshopcart,
       meta: {
         isShow: true
-      }
+      },
     },
     {
       path: '/shopcart',
@@ -92,7 +98,77 @@ const router = new VueRouter({
       meta: {
         isShow: true
       }
-    }
+    },
+    {
+      path: '/trade',
+      name: 'trade',
+      component: Trade,
+      meta: {
+        isShow: true
+      },
+      //路由独享守卫
+      beforeEnter: (to, from, next) => {
+        if (from.path == '/shopcart') {
+          next()
+        } else {
+          next(false)
+        }
+      }
+    },
+    {
+      path: '/pay:totalNum',
+      name: 'pay',
+      component: Pay,
+      meta: {
+        isShow: true
+      },
+      //路由独享守卫
+      beforeEnter: (to, from, next) => {
+        if (from.path == '/trade') {
+          next()
+        } else {
+          next(false)
+        }
+      }
+    },
+    {
+      path: '/paysuccess',
+      name: 'paysuccess',
+      component: Paysuccess,
+      meta: {
+        isShow: true
+      },
+    },
+    {
+      path: '/center',
+      name: 'center',
+      component: Center,
+
+      //子路由
+      children: [
+        {
+          path: 'myorder',
+          name: 'myorder',
+          component: Myorder,
+          meta: {
+            isShow: true
+          },
+        },
+        {
+          path: 'group',
+          name: 'group',
+          component: Group,
+          meta: {
+            isShow: true
+          },
+        },
+        {
+          path: '/center',
+          redirect: '/center/myorder'
+        }
+      ]
+    },
+
   ]
 })
 
@@ -126,9 +202,11 @@ router.beforeEach(async (to, from, next) => {
 
   } else {
     //未登录
-    //不能访问订单，购物车
-    if (to.path == '/shopcart') {
-      next('/')
+    //不能访问订单，购物车,支付页面
+    if (to.path == '/addshopcart'||to.path == '/shopcart' || to.path == '/trade' || to.path.includes('/pay') || to.path.includes('/center')) {
+      alert('请您确认登录')
+      //把未登录要去的路由，存储在地址栏中
+      next('/login?redirect=' + to.path)
     }
     next()
   }

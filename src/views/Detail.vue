@@ -154,11 +154,11 @@ export default {
       }
     },
     //加入购物车,提示用户是否加入成功，函数调用返回的是一个Promise对象
-    getAddshopcart() {
+    async getAddshopcart() {
       //加入购物车之前，判断是否登录
-      if (this.$store.state.user.userInfo.name) {
+      // if (this.$store.state.user.userInfo.name) {
         try {
-          this.$store.dispatch("getAddshopcart", {
+          await this.$store.dispatch("getAddshopcart", {
             skuId: this.$route.params.skuId,
             skuNum: this.Num,
           });
@@ -178,14 +178,14 @@ export default {
         } catch (error) {
           alert(error.message);
         }
-      } else {
-        let C = confirm("请确认是否登录");
-        if (C) {
-          this.$router.push("/login");
-        } else {
-          this.$router.go(0);
-        }
-      }
+      // } else {
+      //   let C = confirm("请确认是否登录");
+      //   if (C) {
+      //     this.$router.push("/login");
+      //   } else {
+      //     this.$router.go(0);
+      //   }
+      // }
     },
   },
 };
